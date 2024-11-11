@@ -31,19 +31,18 @@
         app:layout_constraintHorizontal_bias="0.586"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome_logo"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.222" />
 
     <TextView
         android:id="@+id/title_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:text="Daftar"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/welcome" />
 
@@ -146,6 +145,7 @@
         android:background="@drawable/rounded_edittext"
         android:hint="Password"
         android:paddingLeft="46dp"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_password" />
@@ -178,6 +178,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/rounded_edittext"
+        android:inputType="textPassword"
         android:hint="Konfirmasi Ulang Password"
         android:paddingLeft="46dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -202,7 +203,9 @@
         app:cornerRadius="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/welcome"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_confirmpassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_confirmpassword"
+        app:layout_constraintVertical_bias="0.21" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
