@@ -11,22 +11,22 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.firebaseapp.login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class register extends AppCompatActivity {
 
     private FirebaseAuth auth;
+    private FirebaseFirestore firestore;
     private EditText editText_email, editText_username, editText_password, editText_confirmpassword;
-    private TextView text_to_login;
     private Button btn_regis;
 
     @Override
@@ -36,12 +36,12 @@ public class register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         auth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
         editText_email = findViewById(R.id.editText_email);
         editText_username = findViewById(R.id.editText_username);
         editText_password = findViewById(R.id.editText_password);
         editText_confirmpassword = findViewById(R.id.editText_confirmpassword);
         btn_regis = findViewById(R.id.btn_regis);
-
 
         btn_regis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,22 +52,28 @@ public class register extends AppCompatActivity {
                 String confirmpassword = editText_confirmpassword.getText().toString().trim();
 
                 if (email.isEmpty() || user.isEmpty() || password.isEmpty() || confirmpassword.isEmpty()) {
-                    // Tampilkan pesan kesalahan jika ada field yang kosong
                     Toast.makeText(register.this, "Semua field harus diisi", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Lakukan autentikasi menggunakan Firebase Authentication
                     auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Registrasi berhasil
-                                Toast.makeText(register.this, "Registrasi berhasil", Toast.LENGTH_SHORT).show();
-                                // Pindah ke LoginActivity
-                                Intent intent = new Intent(register.this, login.class);
-                                startActivity(intent);
-                                finish();
+                                // Menyimpan data pengguna ke Firestore
+                                String userId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+                                Map<String, Object> userMap = new HashMap<>();
+                                userMap.put("username", user);
+                                userMap.put("email", email);
+
+                                firestore.collection("users").document(userId)
+                                        .set(userMap)
+                                        .addOnSuccessListener(aVoid -> {
+                                            Toast.makeText(register.this, "Registrasi dan penyimpanan data berhasil", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(register.this, login.class);
+                                            startActivity(intent);
+                                            finish();
+                                        })
+                                        .addOnFailureListener(e -> Toast.makeText(register.this, "Gagal menyimpan data: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                             } else {
-                                // Registrasi gagal
                                 Toast.makeText(register.this, "Registrasi gagal: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -77,11 +83,9 @@ public class register extends AppCompatActivity {
         });
 
         TextView textToLogin = findViewById(R.id.text_to_login);
-        // Tambahkan OnClickListener pada text_to_login
         textToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Pindah ke LoginActivity
                 Intent intent = new Intent(register.this, login.class);
                 startActivity(intent);
             }

@@ -13,18 +13,22 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.firebaseapp.MainActivity;
+import com.example.firebaseapp.R;
+import com.example.firebaseapp.register;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class login extends AppCompatActivity {
 
     private FirebaseAuth auth;
+    private FirebaseFirestore firestore;
     private EditText editText_email, editText_password;
     private Button btn_login;
-    private TextView text_to_register;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,7 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         auth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
         editText_email = findViewById(R.id.editText_email);
         editText_password = findViewById(R.id.editText_password);
         btn_login = findViewById(R.id.btn_login);
@@ -49,33 +54,51 @@ public class login extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
-                                        Toast.makeText(login.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(login.this, MainActivity.class));
-                                        finish();
+                                        String userId = auth.getCurrentUser().getUid();
+
+                                        // Mengambil data pengguna dari Firestore
+                                        firestore.collection("users").document(userId)
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        if (documentSnapshot.exists()) {
+                                                            String username = documentSnapshot.getString("username");
+                                                            String email = documentSnapshot.getString("email");
+
+                                                            // Tampilkan pesan atau simpan data untuk digunakan di MainActivity
+                                                            Toast.makeText(login.this, "Welcome, " + username, Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(login.this, MainActivity.class);
+                                                            intent.putExtra("username", username);
+                                                            intent.putExtra("email", email);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    }
+                                                })
+                                                .addOnFailureListener(e -> Toast.makeText(login.this, "Gagal mengambil data pengguna", Toast.LENGTH_SHORT).show());
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(login.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(login.this, "Login Gagal", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     } else {
-                        editText_password.setError("Empty fields are not allowed");
+                        editText_password.setError("Password tidak boleh kosong");
                     }
                 } else if (email.isEmpty()) {
-                    editText_email.setError("Empty fields are not allowed");
+                    editText_email.setError("Email tidak boleh kosong");
                 } else {
-                    editText_email.setError("Please enter correct email");
+                    editText_email.setError("Format email tidak valid");
                 }
             }
         });
 
         TextView textToRegister = findViewById(R.id.text_to_register);
-        // Tambahkan OnClickListener pada text_to_login
         textToRegister.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // Pindah ke LoginActivity
                 Intent intent = new Intent(login.this, register.class);
                 startActivity(intent);
             }
