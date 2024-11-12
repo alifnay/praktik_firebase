@@ -13,16 +13,19 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class login extends AppCompatActivity {
 
+    private TextView text_to_register;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        TextView textToRegister = findViewById(R.id.text_to_register);
+        text_to_register = findViewById(R.id.text_to_register);
 
         // Tambahkan OnClickListener pada text_to_login
-        textToRegister.setOnClickListener(new View.OnClickListener() {
+        text_to_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Pindah ke LoginActivity
