@@ -41,7 +41,7 @@ public class register extends AppCompatActivity {
         editText_password = findViewById(R.id.editText_password);
         editText_confirmpassword = findViewById(R.id.editText_confirmpassword);
         btn_regis = findViewById(R.id.btn_regis);
-        text_to_login = findViewById(R.id.text_to_login);
+
 
         btn_regis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +66,7 @@ public class register extends AppCompatActivity {
                                 Intent intent = new Intent(register.this, login.class);
                                 startActivity(intent);
                                 finish();
-                                } else {
+                            } else {
                                 // Registrasi gagal
                                 Toast.makeText(register.this, "Registrasi gagal: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -76,8 +76,9 @@ public class register extends AppCompatActivity {
             }
         });
 
+        TextView textToLogin = findViewById(R.id.text_to_login);
         // Tambahkan OnClickListener pada text_to_login
-        text_to_login.setOnClickListener(new View.OnClickListener() {
+        textToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Pindah ke LoginActivity
