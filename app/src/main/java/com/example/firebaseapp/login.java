@@ -1,6 +1,9 @@
 package com.example.firebaseapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,5 +19,16 @@ public class login extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
+        TextView textToRegister = findViewById(R.id.text_to_register);
+
+        // Tambahkan OnClickListener pada text_to_login
+        textToRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Pindah ke LoginActivity
+                Intent intent = new Intent(login.this, register.class);
+                startActivity(intent);
+            }
+        });
     }
 }
