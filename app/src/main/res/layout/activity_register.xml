@@ -32,7 +32,7 @@
         app:layout_constraintHorizontal_bias="0.586"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome_logo"
-        app:layout_constraintVertical_bias="0.222" />
+        app:layout_constraintVertical_bias="0.347" />
 
     <TextView
         android:id="@+id/title_login"
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="8dp"
         android:text="Username"
         android:textColor="@color/white"
         android:textStyle=""
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="Email"
         android:textColor="@color/white"
         android:textStyle=""
@@ -78,10 +78,10 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_edittext"
         android:hint="Silahkan masukkan email"
-        android:textSize="13sp"
         android:paddingLeft="46dp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_email" />
 
@@ -133,7 +133,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="Password"
         android:textColor="@color/white"
         android:textStyle=""
@@ -144,13 +144,14 @@
         android:id="@+id/editText_password"
         android:layout_width="336dp"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_edittext"
         android:hint="Password"
-        android:textSize="13sp"
-        android:paddingLeft="46dp"
         android:inputType="textPassword"
+        android:paddingLeft="46dp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_password" />
 
@@ -180,12 +181,12 @@
         android:layout_width="336dp"
         android:layout_height="48dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_edittext"
-        android:inputType="textPassword"
         android:hint="Konfirmasi Ulang Password"
-        android:textSize="13sp"
+        android:inputType="textPassword"
         android:paddingLeft="46dp"
+        android:textSize="13sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_confirmpassword" />
 
@@ -211,6 +212,19 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_confirmpassword"
-        app:layout_constraintVertical_bias="0.21" />
+        app:layout_constraintVertical_bias="0.186" />
+
+    <TextView
+        android:id="@+id/text_to_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="sudah punya akun? Masuk"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_regis" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
